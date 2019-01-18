@@ -35,6 +35,16 @@ namespace CommonMark.Tests
                 "<p>foo <a href=\"http://foo.baz\">asd</a> bar</p>");
         }
 
+        [TestMethod]
+        [TestCategory("Inlines - Raw HTML")]
+        public void HtmlSingleOpenBrace()
+        {
+            // https://github.com/Knagis/CommonMark.NET/issues/85
+            Helpers.ExecuteTest(
+                "bar\r\nfoo<",
+                "<p>bar\r\nfoo&lt;</p>");
+        }
+
         /// <summary>
         /// Tests HTML block tag names of various lengths (see https://github.com/Knagis/CommonMark.NET/issues/16)
         /// </summary>
@@ -47,10 +57,7 @@ namespace CommonMark.Tests
             foreach (var tag in new[] { "p", "h1", "map", "form", "style", "object", "section", "progress", "progress2", "blockquote", "blockquoteX" })
             {
                 source += "<" + tag + ">\n\t*" + tag + "*\n</" + tag + ">\n\n";
-                if (tag == "progress2" || tag == "blockquoteX")
-                    result += "<p><" + tag + ">\n<em>" + tag + "</em>\n</" + tag + "></p>\n";
-                else
-                    result += "<" + tag + ">\n\t*" + tag + "*\n</" + tag + ">\n";
+                result += "<" + tag + ">\n\t*" + tag + "*\n</" + tag + ">\n";
             }
 
             Helpers.ExecuteTest(source, result);

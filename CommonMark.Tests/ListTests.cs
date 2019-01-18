@@ -24,12 +24,26 @@ namespace CommonMark.Tests
 <li␣data-sourcepos=""0-4"">
 <p␣data-sourcepos=""2-4""><span␣data-sourcepos=""2-3"">a</span></p>
 </li>
-<li␣data-sourcepos=""4-7""></li>
+<li␣data-sourcepos=""4-6""></li>
 <li␣data-sourcepos=""7-10"">
 <p␣data-sourcepos=""9-10""><span␣data-sourcepos=""9-10"">c</span></p>
 </li>
 </ul>
 ", s);
+        }
+
+        [TestMethod]
+        [TestCategory("Container blocks - List items")]
+        public void ListWithTabs()
+        {
+            Helpers.ExecuteTest("*\tbar", "<ul>\n<li>bar</li>\n</ul>");
+        }
+
+        [TestMethod]
+        [TestCategory("Container blocks - List items")]
+        public void ListWithTabs2()
+        {
+            Helpers.ExecuteTest("* foo\n\t* i1\n\t* i2", "<ul>\n<li>foo\n<ul>\n<li>i1</li>\n<li>i2</li>\n</ul>\n</li>\n</ul>");
         }
 
         [TestMethod]
